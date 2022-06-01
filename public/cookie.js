@@ -3,7 +3,8 @@ function setcookie(name, value)
     let date = new Date();
     date.setDate(date.getDate() + 10);
     document.cookie = name + "=" + value + ";expires=" + date.toString();
-}
+
+ }
 
 function getcookie(name)
 {

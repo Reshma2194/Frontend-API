@@ -41,6 +41,18 @@ app.get("/admin/course", (req, res)=>{
 });
 
 
+app.get("/admin/coursetopics", (req, res)=>{
+    if(req.cookies.usertype != "admin")
+    {
+        res.redirect("../login");
+    }
+    res.write(fs.readFileSync(__dirname + "/pages/admin/header.html"));
+    res.write(fs.readFileSync(__dirname + "/pages/admin/coursetopics.html"));
+    res.write(fs.readFileSync(__dirname + "/pages/admin/footer.html"));
+    res.end();
+});
+
+
 app.get("/admin/logout", (req, res)=>{
     res.cookie('usertype', '', { maxAge: -900000, httpOnly: true });
     res.cookie('id', '', { maxAge: -900000, httpOnly: true });
