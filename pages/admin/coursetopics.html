@@ -136,7 +136,8 @@
                     row += "<td>"+ coursetopics.topicname + "</td>";
                     row += "<td>" + coursetopics.description + "</td>";
                     row += "<td>" + coursetopics.srno+ "</td>";
-                    row += "<td><button onclick='edittopic(" + coursetopics.id + ")'>Edit</button></td>";
+                    row += "<td><button class = 'btn btn-primary' onclick='edittopic(" + coursetopics.id + ")'>Edit</button><button class = 'btn btn-danger' onclick='deletetopic(" + coursetopics.id + ")'>Delete</button></td>";
+
                     row += "</tr>";
                     table.append(row);
                     count++;
@@ -171,6 +172,36 @@
         })
     }
 
+
+
+    $(document).ready(()=>{
+        loadData();
+    })
+
+    function deletetopic(id){
+        if(confirm("Sure to delete?"))
+        {
+            $.ajax({
+                url:"http://localhost:8081/deletecoursetopics",
+                type:"post",
+                dataType:"json",
+                contentType:"application/json",
+                data:JSON.stringify({data:{id:id}}),
+                success:(result)=>{
+                    if(result.status == "fail")
+                    {
+                        alert(result.data.sqlMessage);
+                    }
+                    else{
+                        loadData();
+                    }
+                },
+                error:(err)=>{
+                    console.log(err);
+                }
+            });
+        }
+    }
     
 
 
