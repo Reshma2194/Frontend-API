@@ -5,6 +5,9 @@
         </div>
     </div>
     <input type="hidden" id="id" class="form-control" />
+
+
+    <input type="hidden" id="courseid" class="form-control" />
     <div class="row">
         <div class="col-lg-12">
             <label>Sr No</label>
@@ -12,7 +15,7 @@
         </div>
         <div class="col-lg-12">
             <label>Topic Name</label>
-            <input type="text" id="name" class="form-control" />
+            <input type="text" id="topicname" class="form-control" />
         </div>
         <div class="col-lg-12"><br /></div>
         <div class="col-lg-12">
@@ -47,4 +50,42 @@
             }
         })
     });
+
+    function save() {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var courseid = url.searchParams.get("courseid");
+        let id = $("#id").val();
+        let name = $("#topicname").val();
+        let srno = $("#srno").val();
+        let description = $("#description").val();
+        if (name == "") {
+            $("#topicname").focus();
+            return;
+        }
+        if (srno == "") {
+            $("#srno").focus();
+            return;
+        }
+        if (description == "") {
+            $("#description").focus();
+            return;
+        }
+        let data = { data: { id:id , courseid: courseid, topicname: name, description: description,  srno: srno } };
+        $.ajax({
+            url: "http://localhost:8081/savecoursetopics",
+            type: 'post',
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (result) {
+                window.location.replace("../admin/courses");
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        })
+    }
+
+    
 </script>
