@@ -52,6 +52,29 @@ app.get("/admin/coursetopics", (req, res)=>{
     res.end();
 });
 
+app.get("/admin/successstories", (req, res)=>{
+    if(req.cookies.usertype != "admin")
+    {
+        res.redirect("../login");
+    }
+    res.write(fs.readFileSync(__dirname + "/pages/admin/header.html"));
+    res.write(fs.readFileSync(__dirname + "/pages/admin/successstories.html"));
+    res.write(fs.readFileSync(__dirname + "/pages/admin/footer.html"));
+    res.end();
+});
+
+app.get("/admin/stories", (req, res)=>{
+    if(req.cookies.usertype != "admin")
+    {
+        res.redirect("../login");        
+    }
+    else{
+        res.write(fs.readFileSync(__dirname + "/pages/admin/header.html"));
+        res.write(fs.readFileSync(__dirname + "/pages/admin/stories.html"));
+        res.write(fs.readFileSync(__dirname + "/pages/admin/footer.html"));
+        res.end();
+    }
+});
 
 app.get("/admin/logout", (req, res)=>{
     res.cookie('usertype', '', { maxAge: -900000, httpOnly: true });
